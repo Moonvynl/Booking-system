@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    {% for region in regions %}
+        <p><a href="{% url 'hotels' region.id %}">{{region}}</a></p>
+    {% endfor %}
+{% endblock %}

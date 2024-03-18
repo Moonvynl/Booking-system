@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+{% for hotel in hotels %}
+    <p><a href="{% url 'rooms' hotel.id %}">{{hotel}}</a></p>
+{% endfor %}
+{% endblock %}

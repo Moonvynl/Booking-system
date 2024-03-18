@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'auth_sys',
     'django.contrib.staticfiles',
     'booking',
+    
 ]
 
 MIDDLEWARE = [
@@ -118,7 +120,15 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT =  "/static/"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'auth_sys.CustomUser'

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid link-light fs-3">
+    <h1 >Room #{{room.number}}</h1>
+    <p>Capacity: {{room.capacity}}</p>
+    <p>Location: {{room.location}}</p>
+    <p>Description: {{room.description}}</p>
+</div>
+<div class="button">
+    <a href="{% url 'home' %}" class="rgb-button fw-light">Back to menu</a>
+</div>
+{% endblock %}

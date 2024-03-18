@@ -1,14 +1,15 @@
-{% extends 'booking/index.html' %}
-{% block body %}
-<div class = "container">
-    <h1>Rooms:</h1>
-    <ul>
-        {% for room in rooms %}
-            <li>
-                {{ room.number }}
-            </li>
-            <br>
-        {% endfor %}
-    </ul>
+{% extends 'base.html' %}
+{% block content %}
+{% for room in rooms %}
+<div class="container">
+<div class="card mb-3">
+    <img src="{{room.img}}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{room.number}}</h5>
+        <p class="card-text">{{room.description}}</p>
+        <p class="card-text"><small class="text-body-secondary"><a href="{% url 'room-details' room.id%}">View</a><a href="{% url 'book-room' room.id %}">Book</a></small></p>
+    </div>
 </div>
-{% endblock body %}
+</div>
+{% endfor %}
+{% endblock content %}

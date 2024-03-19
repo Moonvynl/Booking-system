@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from booking.models import *
 from django.http import HttpResponse
 from django.contrib.auth import logout
+from datetime import datetime
+
+
 
 def logout_view(request):
     logout(request)
@@ -36,9 +39,10 @@ def get_hotels_by_region(request, pk):
 
 def get_rooms_by_hotel(request, pk):
     rooms = Room.objects.filter(hotel = pk)
+    
 
     context = {
-        "rooms": rooms
+        "rooms": rooms,
     }
 
     return render(

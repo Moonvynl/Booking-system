@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.utils import timezone
+
+
 
 class Region(models.Model):
     name = models.CharField(max_length = 63)
@@ -14,7 +17,7 @@ class Region(models.Model):
 
 
 class Hotel(models.Model):
-    region = models.ForeignKey(Region, on_delete = models.CASCADE, related_name = "hotels", default='default region value')
+    region = models.ForeignKey(Region, on_delete = models.CASCADE, related_name = "hotels", default = 1)
     name = models.CharField(max_length = 63)
     img = models.ImageField(upload_to = "hotels", default='img/default_image.jpg')
     rating = models.IntegerField()
@@ -38,6 +41,14 @@ class Room(models.Model):
     location = models.TextField()
     description = models.TextField()
 
+    def is_booked(self):
+        return Booking.objects.filter(room = self, end_time = timezone.now()).exists()
+    
+    def time(self):
+        booking = Booking.objects.filter(room = self)
+        return f"{booking[0].start_time} - {booking[0].end_time}" if booking else None
+    
+    
     def __str__(self):
         return f"Room - {self.number}"
     

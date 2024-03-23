@@ -1,6 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
-{% for hotel in hotels %}
-    <p><a href="{% url 'rooms' hotel.id %}">{{hotel}}</a></p>
-{% endfor %}
+{% if hotels %}
+<div class="container">
+    <h1 class="text-center text-white">Hotels in {{ hotels.0.region }}</h1>
+    {% for hotel in hotels %}
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-3">
+                    <img src="{{ hotel.img.url }}" class="card-img-top" style="max-width: 300px; max-height: 300px;" alt="...">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ hotel.name }}</h5>
+                        <p class="card-text">{{ hotel.description }}</p>
+                        <p class="card-text">
+                            <small class="text-body-secondary">
+                                <p>Rating: {{ hotel.rating }}</p>
+                                <a href="{% url 'rooms' hotel.id %}">View rooms</a>
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="container">
+    <h1 class="text-center text-white">There is no hotels in this region!</h1>
+</div>
+{% endif %}
 {% endblock %}

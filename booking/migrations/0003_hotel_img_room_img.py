@@ -13,11 +13,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='hotel',
             name='img',
-            field=models.ImageField(default='img/default_image.jpg', upload_to='hotels'),
+            field=models.ImageField(default='default.png', upload_to='hotel_imgs/'),
         ),
         migrations.AddField(
             model_name='room',
             name='img',
-            field=models.ImageField(default='img/default_image.jpg', upload_to='rooms'),
+            field=models.ImageField(default='default.png', upload_to='room_imgs/'),
         ),
     ]

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<br>
+<h1 class="link-light text-center" style="margin: 5px;">Personal {{ request.user.username }}'s cabinet</h1>
+<div class="container">
+    {% if bookings %}
+        <h3 class="link-light">Bookings:</h3>
+        {% for book in bookings %}
+        <div class="card" style="margin: 5px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ book.room.img.url }}" class="card-img-top img-fluid" alt="RoomImg" style="max-width: 300px; max-height: 300px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Hotel: {{ book.room.hotel }}</h5>
+                        <p class="card-text">Number: {{ book.room }}</p>
+                        <p class="card-text">Capacity: {{ book.room.capacity }}</p>
+                        <p class="card-text">Start Time: {{ book.start_time }}</p>
+                        <p class="card-text">End Time: {{ book.end_time }}</p>
+                        <a href="{% url 'update-booking-time' book.id %}" class="btn">Update time</a>
+                        <a class="btn btn-danger mt-2" href="{% url 'delete-booking' book.id %}">Cancel order</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <h3 class="link-light text-center">You don't have orders</h3>
+    {% endif %}
+</div>
+{% endblock %}

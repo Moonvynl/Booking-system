@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<div class="container">
+    <h1 class="link-light">Edit your time</h1>
+    <form id="form-{{ book.id }}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="start-time" class="fs-3 link-light">Start time:</label>
+            <input type="text" class="form-control" id="start-datepicker" name="start-time" required>
+        </div>
+        <div class="form-group">
+            <label for="end-time" class="fs-3 link-light">End time:</label>
+            <input type="text" class="form-control" id="end-datepicker" name="end-time" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Booking</button>
+    </form>
+</div>
+<script>
+    $(document).ready(function() {
+    var startDate = new Date('2024-03-31');
+    var endDate = new Date('2024-03-31');
+        
+    var bookingTimes = {{ times | safe }};
+
+    $("#start-datepicker").datepicker({
+        dateFormat: 'yy-mm-dd',
+        beforeShowDay: function(date) {
+            var currentDate = new Date(date);
+            for (var i = 0; i < bookingTimes.length; i++) {
+                var startTime = new Date(bookingTimes[i]['start_time']);
+                var endTime = new Date(bookingTimes[i]['end_time']);
+                if (currentDate >= startTime && currentDate <= endTime) {
+                    return [false];
+                }
+            }
+            return [currentDate < startDate || currentDate > endDate];
+        }
+    });
+
+    $("#end-datepicker").datepicker({
+        dateFormat: 'yy-mm-dd',
+        beforeShowDay: function(date) {
+            var currentDate = new Date(date);
+            for (var i = 0; i < bookingTimes.length; i++) {
+                var startTime = new Date(bookingTimes[i]['start_time']);
+                var endTime = new Date(bookingTimes[i]['end_time']);
+                if (currentDate >= startTime && currentDate <= endTime) {
+                    return [false];
+                }
+            }
+            return [currentDate < startDate || currentDate > endDate];
+        }
+    });
+    });
+</script>
+{% endblock %}

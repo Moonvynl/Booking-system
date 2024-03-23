@@ -1,17 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <form method="POST" class="needs-validation" novalidate>
     {% csrf_token %}
     <div class="form-group">
         <label for="start-time" class="fs-3 link-light">Start time:</label>
-        <input type="datetime-local" class="form-control" id="start-time" name="start-time" required>
+        <input type="text" class="form-control" id="start-datepicker" name="start-time" required>
         <div class="invalid-feedback">
             Please provide a valid start time.
         </div>
     </div>
     <div class="form-group">
         <label for="end-time" class="fs-3 link-light">End time:</label>
-        <input type="datetime-local" class="form-control" id="end-time" name="end-time" required>
+        <input type="text" class="form-control" id="end-datepicker" name="end-time" required>
         <div class="invalid-feedback">
             Please provide a valid end time.
         </div>
@@ -20,4 +24,43 @@
         <button type="submit" class="btn btn-outline-success">Book this room</button>
     </div>
 </form>
+
+<script>$(function() {
+    var startDate = new Date('2024-03-31');
+    var endDate = new Date('2024-03-31');
+
+    var bookingTimes = {{ room.booking_times | safe }};
+
+    $("#start-datepicker").datepicker({
+        dateFormat: 'yy-mm-dd',
+        beforeShowDay: function(date) {
+            var currentDate = new Date(date);
+            for (var i = 0; i < bookingTimes.length; i++) {
+                var startTime = new Date(bookingTimes[i]['start_time']);
+                var endTime = new Date(bookingTimes[i]['end_time']);
+                if (currentDate >= startTime && currentDate <= endTime) {
+                    return [false];
+                }
+            }
+            return [currentDate < startDate || currentDate > endDate];
+        }
+    });
+
+    $("#end-datepicker").datepicker({
+        dateFormat: 'yy-mm-dd',
+        beforeShowDay: function(date) {
+            var currentDate = new Date(date);
+            for (var i = 0; i < bookingTimes.length; i++) {
+                var startTime = new Date(bookingTimes[i]['start_time']);
+                var endTime = new Date(bookingTimes[i]['end_time']);
+                if (currentDate >= startTime && currentDate <= endTime) {
+                    return [false];
+                }
+            }
+            return [currentDate < startDate || currentDate > endDate];
+        }
+    });
+});
+</script>
+
 {% endblock %}

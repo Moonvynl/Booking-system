@@ -1,20 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for room in rooms %}
+{% if rooms %}
 <div class="container">
-<div class="card mb-3">
-    <img src="{{room.img}}" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">{{room.number}}</h5>
-        <p class="card-text">{{room.description}}</p>
-        <p class="card-text"><small class="text-body-secondary"><a href="{% url 'room-details' room.id%}">View</a>
-        {% if not room.is_booked %}
-        <a href="#" class="btn btn-danger text-white">Booked</a></small></p>
-        {% else %}
-            <a href="{% url 'book-room' room.id %}">Book</a></small></p>
-        {% endif %}
+    <h1 class="text-center text-white">Rooms in {{rooms.0.hotel}}</h1>
+{% for room in rooms %}
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-3">
+                <img src="{{room.img.url}}" class="card-img-top" style="max-width: 300px; max-height: 300px;" alt="...">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title">{{room.number}}</h5>
+                    <p class="card-text">{{room.description}}</p>
+                    <p class="card-text">
+                        <small class="text-body-secondary">
+                            <a href="{% url 'room-details' room.id %}">View</a>
+                            {% if room.is_booked %}
+                                <a href="{% url 'book-room' room.id %}" class="btn btn-danger text-white">Booked for now</a>
+                            {% else %}
+                                <a href="{% url 'book-room' room.id %}" class="btn btn-primary">Book</a>
+                            {% endif %}
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-</div>
 {% endfor %}
+</div>
+{% else %}
+<div class="container">
+    <h1 class="text-center text-white">There is no rooms in this hotel!</h1>
+</div>
+{% endif %}
 {% endblock content %}

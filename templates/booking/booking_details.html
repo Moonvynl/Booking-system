@@ -1,8 +1,25 @@
 {% extends 'base.html' %}
-{% block content %}
 
-    <h1>Booking#{{booking.id}}</h1>
-    <p>User: {{booking.user.username}}</p>
-    <p>Room: {{booking.room}}</p>
-    <p>Time range: {{booking.start_time}} - {{booking.end_time}}</p>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow mt-5">
+                <div class="card-body">
+                    <h1 class="card-title mb-4 text-center">Booking #{{ booking.id }}</h1>
+                    <hr>
+                    <p class="card-text">
+                        <span class="font-weight-bold">User:</span> {{ booking.user.username }}
+                    </p>
+                    <p class="card-text">
+                        <span class="font-weight-bold">Room:</span> {{ booking.room }}
+                    </p>
+                    <p class="card-text">
+                        <span class="font-weight-bold">Time range:</span> {{ booking.start_time }} - {{ booking.end_time }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
